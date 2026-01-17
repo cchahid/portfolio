@@ -107,6 +107,9 @@ const projects = [
   }
 ];
 
+const prefix = process.env.NEXT_PUBLIC_BASE_PATH || '';
+const withBase = (path: string) => `${prefix}${path}`;
+
 function ThemeToggle() {
   const [mounted, setMounted] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
@@ -195,7 +198,7 @@ export default function Page() {
                 View Projects
               </a>
               <a
-                href="/CV_Chahid_Achraf.pdf"
+                href={withBase('/CV_Chahid_Achraf.pdf')}
                 className="rounded-full border border-slate-200 dark:border-slate-800 px-5 py-2 font-semibold hover:-translate-y-0.5 transition"
                 download
               >
@@ -220,7 +223,7 @@ export default function Page() {
             <div className="relative h-52 w-52 rounded-3xl bg-gradient-to-br from-sky-500/70 to-purple-600/70 p-1 shadow-2xl shadow-sky-500/25">
               <div className="h-full w-full overflow-hidden rounded-2xl bg-white dark:bg-slate-900">
                 <Image
-                  src="/profile.jpg"
+                  src={withBase('/profile.jpg')}
                   alt="Achraf Chahid portrait"
                   width={400}
                   height={400}
@@ -384,63 +387,67 @@ export default function Page() {
             Projects
           </motion.h2>
           <div className="grid gap-5 md:grid-cols-2">
-            {projects.map((project, idx) => (
-              <motion.div
-                key={project.title}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: idx * 0.05 }}
-                className="card p-6 space-y-3"
-              >
-                <div
-                  role="button"
-                  tabIndex={0}
-                  onClick={() =>
-                    project.image && setPreview({ src: project.image, alt: `${project.title} architecture diagram` })
-                  }
-                  onKeyDown={(e) => {
-                    if (project.image && (e.key === 'Enter' || e.key === ' ')) {
-                      e.preventDefault();
-                      setPreview({ src: project.image, alt: `${project.title} architecture diagram` });
-                    }
-                  }}
-                  className="relative block aspect-video overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer"
+            {projects.map((project, idx) => {
+              const imageSrc = project.image ? withBase(project.image) : null;
+
+              return (
+                <motion.div
+                  key={project.title}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: idx * 0.05 }}
+                  className="card p-6 space-y-3"
                 >
-                  {project.image ? (
-                    <>
-                      <Image
-                        src={project.image}
-                        alt={`${project.title} architecture diagram`}
-                        width={800}
-                        height={450}
-                        className="h-full w-full object-cover"
-                      />
-                      <span className="absolute right-2 top-2 rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold text-white shadow-sm dark:bg-white/80 dark:text-slate-900">
-                        Click to enlarge
-                      </span>
-                    </>
-                  ) : (
-                    <div className="h-full w-full grid place-items-center text-sm text-slate-500 dark:text-slate-400 border border-dashed border-slate-300 dark:border-slate-700">
-                      Architecture diagram (add later)
-                    </div>
-                  )}
-                </div>
-                <h3 className="text-xl font-semibold">{project.title}</h3>
-                <p className="text-slate-600 dark:text-slate-300">{project.description}</p>
-                <p className="text-sm text-slate-500 dark:text-slate-400">{project.tech}</p>
-                <div className="flex gap-3">
-                  <a
-                    href={project.github}
-                    className="text-sm font-semibold text-sky-600 dark:text-sky-400 hover:underline"
-                    target="_blank"
-                    rel="noreferrer"
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    onClick={() =>
+                      imageSrc && setPreview({ src: imageSrc, alt: `${project.title} architecture diagram` })
+                    }
+                    onKeyDown={(e) => {
+                      if (imageSrc && (e.key === 'Enter' || e.key === ' ')) {
+                        e.preventDefault();
+                        setPreview({ src: imageSrc, alt: `${project.title} architecture diagram` });
+                      }
+                    }}
+                    className="relative block aspect-video overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/40 hover:shadow-md hover:-translate-y-0.5 transition cursor-pointer"
                   >
-                    GitHub Repo
-                  </a>
-                </div>
-              </motion.div>
-            ))}
+                    {imageSrc ? (
+                      <>
+                        <Image
+                          src={imageSrc}
+                          alt={`${project.title} architecture diagram`}
+                          width={800}
+                          height={450}
+                          className="h-full w-full object-cover"
+                        />
+                        <span className="absolute right-2 top-2 rounded-full bg-slate-900/80 px-3 py-1 text-xs font-semibold text-white shadow-sm dark:bg-white/80 dark:text-slate-900">
+                          Click to enlarge
+                        </span>
+                      </>
+                    ) : (
+                      <div className="h-full w-full grid place-items-center text-sm text-slate-500 dark:text-slate-400 border border-dashed border-slate-300 dark:border-slate-700">
+                        Architecture diagram (add later)
+                      </div>
+                    )}
+                  </div>
+                  <h3 className="text-xl font-semibold">{project.title}</h3>
+                  <p className="text-slate-600 dark:text-slate-300">{project.description}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{project.tech}</p>
+                  <div className="flex gap-3">
+                    <a
+                      href={project.github}
+                      className="text-sm font-semibold text-sky-600 dark:text-sky-400 hover:underline"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      GitHub Repo
+                    </a>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </section>
 
