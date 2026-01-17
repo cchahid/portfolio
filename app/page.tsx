@@ -41,23 +41,25 @@ const highlights = [
 
 const experiences = [
   {
-    title: 'Final-year Internship (Seeking)',
-    period: 'Available now',
-    location: 'Casablanca or remote',
+    title: 'Data & AI Engineering Projects',
+    period: '2023 - 2025',
+    location: 'Portfolio builds',
     bullets: [
-      'Build and optimize data pipelines (Spark, Kafka, Databricks)',
-      'Deploy and monitor jobs in cloud or hybrid environments',
-      'Collaborate on AI-enabled data products'
+      'Built a SQL data warehouse with modeled marts for analytics-ready reporting',
+      'Delivered ELT with dbt on Instacart data, including tests and documentation',
+      'Prototyped multimodal AI agent for intelligent image search and retrieval',
+      'Implemented CI/CD and infrastructure automation for application delivery'
     ]
   },
   {
-    title: 'Academic Projects & Labs',
-    period: '2023 - 2025',
-    location: 'Hassan II University of Casablanca',
+    title: 'Platform & Architecture Work',
+    period: '2024 - 2025',
+    location: 'Personal portfolio',
     bullets: [
-      'Implemented streaming ingestion with Kafka + Spark Streaming',
-      'Prototyped multimodal AI agents for intelligent image search',
-      'Automated workflows with n8n and external APIs'
+      'Designed microservice backend (Dockerized) with clear service boundaries',
+      'Created e-Health blockchain prototype for secure data exchange',
+      'Published architecture diagrams and docs for each project',
+      'Open to collaboration or freelance support on data/AI builds'
     ]
   }
 ];
@@ -175,8 +177,8 @@ export default function Page() {
               Achraf Chahid
             </p>
             <h1 className="text-4xl sm:text-3xl font-bold leading-tight">
-              Data Engineering Student
-              <span className="block">Big Data &amp; AI Enthusiast</span>
+              Big Data Student
+              <span className="block">Data Engineering &amp; AI Enthusiast</span>
             </h1>
             <p className="text-lg text-slate-600 dark:text-slate-300">
               Master&apos;s student in Data Science &amp; Big Data focused on building scalable data pipelines and intelligent systems with Spark, Kafka, and Databricks. Looking for a final-year internship to apply these skills.
